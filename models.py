@@ -130,7 +130,6 @@ class CharRNN:
 
             self.saver.save(sess, os.path.join(save_path, 'model'), global_step=step)
 
-
     def sample(self, n_samples, prime, vocab_size):
         samples = [c for c in prime]
         sess = self.session
@@ -151,7 +150,7 @@ class CharRNN:
             for i in range(n_samples):
                 x = np.zeros((1, 1))
                 x[0, 0] = c
-                feed = {self.inputs:x,
+                feed = {self.inputs: x,
                         self.keep_prob: 1.,
                         self.initial_state: new_state}
                 preds, new_state = sess.run([self.proba_prediction, self.final_state],

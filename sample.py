@@ -5,17 +5,16 @@ import tensorflow as tf
 from read_utils import TextCoverter
 from models import CharRNN
 import os
-from IPython import embed
 
 FLAGS = tf.flags.FLAGS
 
 tf.flags.DEFINE_integer('lstm_size', 128, 'size of hidden state of lstm')
 tf.flags.DEFINE_integer('num_layers', 2, 'number of lstm layers')
-tf.flags.DEFINE_boolean('use_embedding', False, 'whether to use embedding')
+tf.flags.DEFINE_boolean('use_embedding', True, 'whether to use embedding')
 tf.flags.DEFINE_integer('embedding_size', 128, 'size of embedding')
 tf.flags.DEFINE_string('converter_path', 'model/poetry/converter.pkl', 'model/name/converter.pkl')
 tf.flags.DEFINE_string('checkpoint_path', 'model/poetry', 'checkpoint path')
-tf.flags.DEFINE_string('start_string', u'月', 'use this string to start generating')
+tf.flags.DEFINE_string('start_string', u'君', 'use this string to start generating')
 tf.flags.DEFINE_integer('max_length', 50, 'max length to generate')
 
 

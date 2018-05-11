@@ -8,20 +8,26 @@ import copy
 
 def batch_generator(arr, n_seqs, n_steps):
     arr = copy.copy(arr)
+
+    print('before:{}\n'.format(arr))
     batch_size = n_seqs * n_steps
     n_batches = int(len(arr)/batch_size)
     arr = arr[:n_batches * batch_size]
+    # print(arr)
     arr = arr.reshape((n_seqs, -1))
+    print('after:{}\n'.format(arr))
+
     while True:
         np.random.shuffle(arr)
+        print('after shuffle: {}'.format(arr))
         for n in range(0, arr.shape[1], n_steps):
             x = arr[:, n:n + n_steps]
             y = np.zeros_like(x)
             y[:, :-1], y[:, -1] = x[:, 1:], x[:, 0]
             yield x, y
 
-class TextCoverter(object):
 
+class TextCoverter(object):
     def __init__(self, text=None, max_vocab=5000, filename=None):
         if filename is not None:
             with open(filename, 'rb') as f:
@@ -43,7 +49,6 @@ class TextCoverter(object):
         self.word_to_int_table = {c: i for i, c in enumerate(self.vocab)}
         self.int_to_word_table = dict(enumerate(self.vocab))
 
-
     def text_to_arr(self, text):
         arr = [self.word_to_int_table[word] for word in text]
         return np.array(arr)
@@ -63,7 +68,6 @@ class TextCoverter(object):
     @property
     def vocab_size(self):
         return len(self.vocab) + 1
-
 
     def save_to_file(self, filename):
         with open(filename, 'wb') as f:
